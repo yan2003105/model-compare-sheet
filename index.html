@@ -1,0 +1,12 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Model Compare Sheet</title>
+<style>body{font-family:system-ui,sans-serif;max-width:760px;margin:0 auto;padding:20px;background:#f7f7f5}input{width:100%;padding:6px;border:1px solid #ddd;border-radius:6px;box-sizing:border-box}.card{background:#fff;border:1px solid #e5e5e0;border-radius:12px;padding:14px;margin:12px 0}button{background:#111;color:#fff;border:0;border-radius:8px;padding:8px 14px}.muted{color:#888;font-size:13px}table{width:100%;border-collapse:collapse}td,th{border:1px solid #eee;padding:6px;text-align:left;font-size:14px}</style></head>
+<body><h1>Model Compare Sheet</h1><p class="muted">Unofficial tool, not affiliated with OpenAI. Enter and verify all numbers yourself. The tool does not fetch official data automatically. No login, no API key. Data stays in your browser localStorage.</p>
+<div class="card"><input id="name" placeholder="Model name, e.g. Model A"><input id="note" placeholder="Best for / notes, e.g. fast for coding, good at Chinese"><button onclick="add()">Add to comparison</button><button onclick="if(confirm('Clear all?')){items=[];save();}">Clear all</button></div><div id="list"></div>
+<script>
+const KEY='model-compare-v1';let items=JSON.parse(localStorage.getItem(KEY)||'[]');
+function save(){localStorage.setItem(KEY,JSON.stringify(items));render();}
+function add(){const n=name.value.trim();if(!n)return alert('Enter a model name first');items.push({n,note:note.value.trim()});name.value='';note.value='';save();}
+function del(i){items.splice(i,1);save();}
+function render(){document.getElementById('list').innerHTML='<div class="card"><table><tr><th>Model</th><th>Best for / notes (enter yourself)</th><th></th></tr>'+items.map((x,i)=>'<tr><td>'+x.n+'</td><td>'+(x.note||'—')+'</td><td><button onclick="del('+i+')">Delete</button></td></tr>').join('')+'</table>'+(items.length?'':'<p class="muted">No models yet. Add one above.</p>')+'</div>';}
+render();
+</script></body></html>
