@@ -1,0 +1,12 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>模型对比工作表</title>
+<style>body{font-family:system-ui,"PingFang SC",sans-serif;max-width:760px;margin:0 auto;padding:20px;background:#f7f7f5}input{width:100%;padding:6px;border:1px solid #ddd;border-radius:6px;box-sizing:border-box}.card{background:#fff;border:1px solid #e5e5e0;border-radius:12px;padding:14px;margin:12px 0}button{background:#111;color:#fff;border:0;border-radius:8px;padding:8px 14px}.muted{color:#888;font-size:13px}table{width:100%;border-collapse:collapse}td,th{border:1px solid #eee;padding:6px;text-align:left;font-size:14px}</style></head>
+<body><h1>模型对比工作表</h1><p class="muted">非官方工具，与 OpenAI 无关。所有数字都要你自己填、自己验，工具不自动拉官方数据、不登录、不要 API Key，数据只存在浏览器本地。</p>
+<div class="card"><input id="name" placeholder="模型名，例如：某模型 A"><input id="note" placeholder="适合场景 / 备注，例如：写代码快、中文好"><button onclick="add()">加入对比</button><button onclick="if(confirm('清空全部？')){items=[];save();}">清空</button></div><div id="list"></div>
+<script>
+const KEY='model-compare-v1';let items=JSON.parse(localStorage.getItem(KEY)||'[]');
+function save(){localStorage.setItem(KEY,JSON.stringify(items));render();}
+function add(){const n=name.value.trim();if(!n)return alert('先填模型名');items.push({n,note:note.value.trim()});name.value='';note.value='';save();}
+function del(i){items.splice(i,1);save();}
+function render(){document.getElementById('list').innerHTML='<div class="card"><table><tr><th>模型</th><th>适合场景 / 备注（自己填）</th><th></th></tr>'+items.map((x,i)=>'<tr><td>'+x.n+'</td><td>'+(x.note||'—')+'</td><td><button onclick="del('+i+')">删除</button></td></tr>').join('')+'</table>'+(items.length?'':'<p class="muted">还没有模型，先在上面加一个。</p>')+'</div>';}
+render();
+</script></body></html>

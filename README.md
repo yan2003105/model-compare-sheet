@@ -5,3 +5,9 @@ Unofficial tool, not affiliated with OpenAI. A single-file local worksheet to co
 ## License
 
 MIT, see `LICENSE`.
+
+
+## Versions / 版本
+
+- English: `index.html`
+- 中文版：`index-zh.html`
